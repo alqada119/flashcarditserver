@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2020",                         // Modern JS features
+    "module": "CommonJS",                       // Node.js module system
+    "lib": ["ES2020", "DOM"],                   // Include latest ES features
+    "moduleResolution": "Node",                 // Resolve Node.js modules
+    "esModuleInterop": true,                    // Allow default imports from CJS modules
+    "allowSyntheticDefaultImports": true,       // Compatibility for default imports
+
+    /* Output */
+    "outDir": "./dist",                         // Output compiled JS
+    "rootDir": "./src",                         // Your TypeScript source files
+
+    /* Type Checking */
+    "strict": true,                             // Enable all strict type checks
+    "noImplicitAny": true,                      // Warn on variables without type
+    "strictNullChecks": true,                   // Ensure null safety
+    "strictFunctionTypes": true,                // More precise function types
+
+    /* Node.js specific */
+    "types": ["node", "express"],               // Load Node & Express types
+    "resolveJsonModule": true,                  // Allow importing JSON files
+    "skipLibCheck": true,                       // Skip checking type definitions in node_modules
+    "forceConsistentCasingInFileNames": true    // Prevent case-sensitivity issues
+  },
+  "include": ["src/**/*"],                      // Include all TS source files
+  "exclude": ["node_modules", "dist"]           // Ignore build & dependencies
+}
