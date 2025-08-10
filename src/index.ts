@@ -1,11 +1,11 @@
 import express, { Request, Response } from "express";
 // import multer, { FileFilterCallback } from "multer";
 import bodyParser from "body-parser";
-import { OpenAI } from "openai";
+// import { OpenAI } from "openai";
 import dotenv from "dotenv";
-import fs from "fs";
-import path from "path";
-import { MongoClient, Db, Collection } from "mongodb";
+// import fs from "fs";
+// import path from "path";
+import { flashcardRouter } from "./router/flashcardRouter";
 
 dotenv.config();
 
@@ -21,23 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   },
 // });
 // const upload = multer({ storage: storage });
-
-// MongoDB connection string and client
-const mongoUri: string = process.env.CONNECTION_STRING || "";
-if (!mongoUri) {
-  console.error("Missing MongoDB connection string in .env");
-  process.exit(1);
-}
-
-interface FlashcardRequestBody {
-  numberOfFlashCards: number;
-}
-
-// Simple GET route
-app.get("/api", (req: Request, res: Response) => {
-  console.log("GET request received");
-  res.status(200).send({ message: "Hello World" });
-});
 
 // Handle file upload and transcription
 // app.post(
@@ -114,27 +97,9 @@ app.get("/api", (req: Request, res: Response) => {
 // );
 
 // Save flashcards to MongoDB
-app.post("/api/flashcard", async (req: Request, res: Response) => {
-  console.log("Request received to save flashcard");
 
-  const client = new MongoClient(mongoUri);
 
-  try {
-    await client.connect();
-    const db: Db = client.db("FlashcardApp");
-    const flashCardCollection: Collection = db.collection("Flashcards");
-
-    console.log("Connected to DB, inserting flashcard...");
-    await flashCardCollection.insertOne(req.body);
-
-    return res.json({ message: "Success" });
-  } catch (error) {
-    console.error("Error saving flashcard:", error);
-    return res.status(500).json({ error: "Database error" });
-  } finally {
-    await client.close();
-  }
-});
+app.use("/api", flashcardRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
